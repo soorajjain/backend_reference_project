@@ -27,4 +27,8 @@ export const RESPONSE = {
     code: "204",
     msg: "access denied",
   },
+  MULTER_ERR: {
+    code: "205",
+    msg: "file size exeeded",
+  },
 };

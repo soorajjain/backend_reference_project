@@ -10,7 +10,7 @@ const studentModel = {
   },
   image: {
     type: [String],
-    data: buffer,
+    // data: buffer,
     required: true,
   },
   teacher_id: {
@@ -26,6 +26,7 @@ const studentModel = {
 let student = null;
 const initStudentModel = async () => {
   try {
+    if (student) return student;
     student = mongoose.model("student_model", studentModel);
     return student;
   } catch (error) {

@@ -5,7 +5,7 @@ import { RESPONSE } from "../config/global.js";
 const authenticate = (req, res, next) => {
   const token = req.headers["authorization"];
   let response;
-console.log(token);
+// console.log(token);
   if (!token) {
     return res.json(RESPONSE.ACCESS_DENIED);
   }
@@ -14,8 +14,8 @@ console.log(token);
     const decoded = jwt.verify(token, process.env.TOKENKEY);
     req.user = decoded;
     next();
-  } catch (error) {
-    console.log("Authenticate", error);
+  } catch (error) { 
+    console.log(error);
     response = RESPONSE.INVALID_DATA;
     return res.json({
       code: response.code,

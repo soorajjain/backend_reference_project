@@ -13,7 +13,7 @@ router.post("/", async (req, res) => {
 
     let response;
 
-    const { teacher_name, email, phone, password } = req.body;
+    const { teacher_name, email, phone, password, image } = req.body;
 
     console.log(teacher_name);
 
@@ -45,7 +45,7 @@ router.post("/", async (req, res) => {
         msg: "password" + response.msg,
       });
     }
-
+    
     const isValidEmail = validator.isEmail(email);
     if (isValidEmail == false) {
       response = RESPONSE.INVALID_DATA;
@@ -91,15 +91,15 @@ router.post("/", async (req, res) => {
       });
     }
 
-    // const HASH = 10;
     const encryptedPassword = await bcrypt.hash(password, constants.HASH_ROUND);
-    console.log(encryptedPassword);
+    // console.log(encryptedPassword);
 
     await teacherModel.create({
       teacher_name: teacher_name,
       phone: phone,
       email: email,
       password: encryptedPassword,
+      image: image,
     });
 
     return res.json(RESPONSE.SUCCESS);
