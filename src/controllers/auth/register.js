@@ -45,7 +45,7 @@ router.post("/", async (req, res) => {
         msg: "password" + response.msg,
       });
     }
-    
+
     const isValidEmail = validator.isEmail(email);
     if (isValidEmail == false) {
       response = RESPONSE.INVALID_DATA;
