@@ -1,6 +1,5 @@
-//for ref how to merge both litstud and listbyid
-
-//it will be more good if less apis are there
+//in db we never delete any data we just disable it
+//so we use put to disable by constant state to inactive
 
 import express from "express";
 const router = express.Router();
@@ -16,9 +15,8 @@ router.put("/:id", authenticate, async (req, res) => {
     const studentModel = await initStudentModel();
     const teacher_id = req.user.id;
     let response;
-    const student_id = req.params.id; //take the id thats there in get method in the top -/:id?
-    const { student_name, rollno } = req.body;
-    let updates = {};
+    const student_id = req.params.id; //take the id thats there in put method in the top -/:id?
+
     const isValidId = await studentModel.findOne({
       _id: student_id,
       is_active: constants.STATE.ACTIVE,
@@ -32,20 +30,22 @@ router.put("/:id", authenticate, async (req, res) => {
       });
     }
 
-    if (student_name && student_name != "") {
-      updates.student_name = student_name;
-    }
-    if (rollno && rollno != "") {
-      updates.rollno = rollno;
-    }
-
-    console.log(updates);
     await studentModel.findOneAndUpdate(
       {
         _id: student_id,
+        is_active: constants.STATE.ACTIVE,
       },
-      updates
+      { is_active: constants.STATE.INACTIVE }
     );
+
+    // this is how to delete but just change the req to del -> router.del
+
+    // await studentModel.deleteOne(
+    //     {
+    //       _id: student_id,
+    //       is_active: constants.STATE.ACTIVE,
+    //     },
+    //   );
 
     return res.json(RESPONSE.SUCCESS);
   } catch (error) {
