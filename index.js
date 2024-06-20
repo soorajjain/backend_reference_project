@@ -8,6 +8,9 @@ import routes from "./routes.js";
 import bcrypt from "bcrypt";
 import path from "path";
 const PORT = process.env.PORT;
+import cors from "cors";
+
+app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, "public")));

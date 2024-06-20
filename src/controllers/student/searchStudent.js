@@ -7,14 +7,16 @@ import authenticate from "../../middleware/authenticate.js";
 
 import initStudentModel from "../../model/studentModel.js";
 
-router.get("/", authenticate, async (req, res) => {
+router.get("/:search_key", authenticate, async (req, res) => {
   try {
     //pagination
     //Pagination is the process of dividing content into discrete pages, whether in print or digital form.
     //this is when you are browsing first it should only load 10 data or 1 page after scroll it shuold load next
 
-    let page = Number(req.query.page) ? Number(req.query.page) : 1;
-    let limit = Number(req.query.limit) ? Number(req.query.limit) : 10;
+    // let page = Number(req.query.page) ? Number(req.query.page) : 1;
+    // let limit = Number(req.query.limit) ? Number(req.query.limit) : 10;
+
+    let search_key = req.params.search_key;
 
     const studentModel = await initStudentModel();
     const teacher_id = req.user.id;
@@ -22,16 +24,22 @@ router.get("/", authenticate, async (req, res) => {
     //this find stires data in array but find one stores data in object
     //using to get data that are with teacher id
 
-    let data = await studentModel
-      .find({
-        is_active: constants.STATE.ACTIVE,
-        teacher_id: teacher_id,
-      })
+    let data = await studentModel.find({
+      is_active: constants.STATE.ACTIVE,
+      teacher_id: teacher_id,
 
-      //skip an lmits are inbuilt methods of mongo db
-      //it will be use dfor pagination
-      .skip((page - 1) * limit)
-      .limit(limit);
+      //regex is a js method ,options-is for non case insensitive
+      // we are using or operator using object
+      $or: [
+        { student_name: { $regex: search_key, $options: "i" } },
+        { rollno: { $regex: search_key } },
+      ],
+    });
+
+    //skip an lmits are inbuilt methods of mongo db
+    //it will be use dfor pagination
+    // .skip((page - 1) * limit)
+    // .limit(limit);
 
     console.log(data.length);
     if (data.length == 0) {

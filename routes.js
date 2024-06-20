@@ -9,6 +9,7 @@ const routes = (app) => {
   app.use("/api/auth", authApiHandler);
   app.use("/api/student", studentApiHandler);
   app.use("/api/teacher", teacherApiHandler);
+
 };
 
 export default routes;

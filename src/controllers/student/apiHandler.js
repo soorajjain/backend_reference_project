@@ -7,7 +7,7 @@ import listStudentById from "./listStudentById.js";
 import list from "./list.js";
 import editStudent from "./editStudent.js";
 import deleteStudent from "./deleteStudent.js";
-
+import searchStudent from "./searchStudent.js";
 
 router.use("/add_student", addStudent);
 router.use("/list_student", listStudent);
@@ -15,6 +15,6 @@ router.use("/list_student_by_id", listStudentById);
 router.use("/list_both", list);
 router.use("/edit_student", editStudent);
 router.use("/delete_student", deleteStudent);
-
+router.use("/search_student", searchStudent);
 
 export default router;
