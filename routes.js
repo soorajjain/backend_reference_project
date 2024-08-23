@@ -1,5 +1,4 @@
 import express from "express";
-
 import authApiHandler from "./src/controllers/auth/apiHandler.js";
 import studentApiHandler from "./src/controllers/student/apiHandler.js";
 import teacherApiHandler from "./src/controllers/teacher/apiHandler.js";

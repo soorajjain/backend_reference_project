@@ -68,13 +68,6 @@ router.post("/", async (req, res) => {
         msg: "login credentials" + response.msg,
       });
     }
-    // await teacherModel.create({
-    //   teacher_name: teacher_name,
-    //   phone: phone,
-    //   email: email,
-    //   password: encryptedPassword,
-    // });
-
     return res.json(RESPONSE.SUCCESS);
   } catch (error) {
     console.log(error);

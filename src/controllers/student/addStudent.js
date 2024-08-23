@@ -13,15 +13,15 @@ router.post("/", authenticate, async (req, res) => {
     uploads(req, res, async (err) => {
       let response;
       // console.log(req.files);  image data files
-      if (!req.files || req.files == "") {
-        response = RESPONSE.MANDATORY_PARAMS;
-        return res.json({
-          code: response.code,
-          msg: "image" + response.msg,
-        });
-      } else if (err instanceof multer.MulterError) {
-        return res.json(RESPONSE.MULTER_ERR);
-      }
+      // if (!req.files || req.files == "") {
+      //   response = RESPONSE.MANDATORY_PARAMS;
+      //   return res.json({
+      //     code: response.code,
+      //     msg: "image" + response.msg,
+      //   });
+      // } else if (err instanceof multer.MulterError) {
+      //   return res.json(RESPONSE.MULTER_ERR);
+      // }
 
       if (err) {
         return res.json(RESPONSE.UNKNOWN_ERROR);
@@ -34,7 +34,6 @@ router.post("/", authenticate, async (req, res) => {
           fileName.push(ele.filename);
         });
       }
-      // console.log(fileName);
 
       const studentModel = await initStudentModel();
       const { student_name, rollno } = req.body;
@@ -58,6 +57,7 @@ router.post("/", authenticate, async (req, res) => {
           msg: "rollno" + response.msg,
         });
       }
+      console.log(fileName);
       await studentModel.create({
         student_name: student_name,
         rollno: rollno,
